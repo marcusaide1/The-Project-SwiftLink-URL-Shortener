@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SwiftLink | URL Shortener</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .container { text-align: center; max-width: 500px; }
+        input { padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #result { margin-top: 20px; font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SwiftLink</h1>
+        <input type="url" id="longUrl" placeholder="Paste a long URL (https://...)" required>
+        <button onclick="shorten()">Shorten</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function shorten() {
+            const longUrl = document.getElementById('longUrl').value;
+            const resultDiv = document.getElementById('result');
+            const apiUrl = "[YOUR_API_URL]/shorten"; // <-- PASTE YOUR URL HERE
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    body: longUrl // Your Go code reads the raw body
+                });
+                const shortId = await response.text();
+                const fullShortUrl = window.location.origin + "/" + shortId;
+                resultDiv.innerHTML = `Short URL: <a href="/${shortId}" target="_blank">${fullShortUrl}</a>`;
+            } catch (err) {
+                resultDiv.innerText = "Error shortening URL";
+            }
+        }
+    </script>
+</body>
+</html>

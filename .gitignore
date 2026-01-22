@@ -1,0 +1,7 @@
+.terraform/
+*.tfstate*
+*.zip
+*.log
+node_modules/
+bin/
+obj/
